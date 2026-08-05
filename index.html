@@ -17,11 +17,11 @@
             color: #00ff41;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
             padding: 20px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* Мерцающий фон */
@@ -74,6 +74,7 @@
         .container {
             max-width: 700px;
             width: 100%;
+            margin: auto;
             border: 1px solid rgba(0, 255, 65, 0.4);
             border-radius: 8px;
             padding: 40px;
@@ -101,6 +102,7 @@
                 0 0 20px #00ff41,
                 0 0 40px #00ff41;
             animation: glow 2s ease-in-out infinite alternate;
+            word-wrap: break-word;
         }
 
         @keyframes glow {
@@ -139,6 +141,8 @@
             line-height: 1.7;
             color: #00dd38;
             opacity: 0.9;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .warning {
@@ -174,6 +178,8 @@
             text-shadow: 0 0 10px #00ff41;
             transition: all 0.3s ease;
             display: inline-block;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .link-box a:hover {
@@ -209,6 +215,60 @@
 
         @keyframes blink {
             50% { opacity: 0; }
+        }
+
+        /* Мобильная адаптация */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+                letter-spacing: 2px;
+            }
+
+            .section-title {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .link-box a {
+                font-size: 18px;
+            }
+
+            .link-box {
+                padding: 15px 10px;
+            }
+
+            .warning {
+                padding: 12px 15px;
+            }
+        }
+
+        /* Для совсем маленьких экранов */
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .section-title {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+
+            .link-box a {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
