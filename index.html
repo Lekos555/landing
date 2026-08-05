@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Server — Справка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff41;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Мерцающий фон */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 50% 50%, rgba(0, 255, 65, 0.03) 0%, transparent 70%);
+            animation: flicker 4s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.4; }
+            10% { opacity: 0.8; }
+            20% { opacity: 0.5; }
+            30% { opacity: 1; }
+            40% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+            60% { opacity: 0.4; }
+            70% { opacity: 0.7; }
+            80% { opacity: 1; }
+            90% { opacity: 0.5; }
+        }
+
+        /* Сканирующие линии поверх (CRT-эффект) */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.15) 2px,
+                rgba(0, 0, 0, 0.15) 4px
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid rgba(0, 255, 65, 0.4);
+            border-radius: 8px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.85);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.2),
+                inset 0 0 30px rgba(0, 255, 65, 0.05);
+            position: relative;
+            z-index: 5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+        }
+
+        h1 {
+            font-size: 28px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px #00ff41,
+                0 0 20px #00ff41,
+                0 0 40px #00ff41;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
+            to { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41, 0 0 30px #00ff41; }
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #00aa2a;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            opacity: 0.7;
+        }
+
+        .section {
+            margin: 25px 0;
+        }
+
+        .section-title {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #00ff41;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .section-title::before {
+            content: '> ';
+            color: #00aa2a;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #00dd38;
+            opacity: 0.9;
+        }
+
+        .warning {
+            background: rgba(255, 0, 0, 0.08);
+            border-left: 3px solid #ff3333;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning .section-title {
+            color: #ff6666;
+        }
+
+        .warning p {
+            color: #ffaaaa;
+        }
+
+        .link-box {
+            text-align: center;
+            margin: 30px 0 20px;
+            padding: 20px;
+            border: 1px dashed rgba(0, 255, 65, 0.4);
+            border-radius: 4px;
+        }
+
+        .link-box a {
+            color: #00ff41;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ff41;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .link-box a:hover {
+            text-shadow: 
+                0 0 15px #00ff41,
+                0 0 30px #00ff41,
+                0 0 50px #00ff41;
+            transform: scale(1.05);
+        }
+
+        .link-box a::before {
+            content: '» ';
+        }
+
+        .link-box a::after {
+            content: ' «';
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+            font-size: 11px;
+            color: #00aa2a;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>// VPN SERVER</h1>
+            <div class="subtitle">private access only<span class="blink">_</span></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">О сервере</div>
+            <p>Доступ к серверу предоставляется исключительно владельцем для личных нужд ограниченного круга лиц. Это не публичный сервис — скорее домашняя сетка для своих.</p>
+        </div>
+
+        <div class="warning">
+            <div class="section-title">Ограничения</div>
+            <p>Протокол BitTorrent не поддерживается и поддерживаться не будет. Пожалуйста, не надо.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Конфиденциальность</div>
+            <p>Мы не продаём данные, не сливаем логи и вообще стараемся хранить как можно меньше информации о подключениях. Всё, что происходит в туннеле — остаётся в туннеле. Но помни: анонимность в интернете — это миф, а VPN лишь снижает градус паранойи.</p>
+        </div>
+
+        <div class="link-box">
+            <a href="https://incy.cc" target="_blank" rel="noopener">incy.cc</a>
+        </div>
+
+        <div class="footer">
+            powered by caffeine & curiosity
+        </div>
+    </div>
+</body>
+</html>
